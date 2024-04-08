@@ -9,6 +9,8 @@ int main()
 {
     Test_Algo Test;
 
-    Test.BubbleSortTest();
+    //Test.BubbleSortTest();
+    Test.InsertionSortTest();
+    //Test.CountingSortTest();
 }
 

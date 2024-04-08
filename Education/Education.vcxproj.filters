@@ -18,18 +18,24 @@
     <ClCompile Include="Education.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Algo.cpp">
+    <ClCompile Include="Algo\Algo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestBase.cpp">
+    <ClCompile Include="Tests\TestBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Test_Algo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Algo.h">
+    <ClInclude Include="Algo\Algo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestBase.h">
+    <ClInclude Include="Tests\TestBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\Test_Algo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
