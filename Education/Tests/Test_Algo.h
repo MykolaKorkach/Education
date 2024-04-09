@@ -8,6 +8,7 @@ public:
     void BubbleSortTest();
     void InsertionSortTest();
     void CountingSortTest();
+    void QuickSortTest();
 
 private:
     
@@ -23,4 +24,9 @@ private:
     void CountingTest(vector<T> InVector);
     template<typename T>
     void CountingStableTest(vector<T> InVector);
+    
+    template<typename T>
+    void QuickLomutoTest(vector<T> InVector);
+    template<typename T>
+    void QuickHoareTest(vector<T> InVector);
 };

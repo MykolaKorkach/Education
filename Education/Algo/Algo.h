@@ -5,8 +5,10 @@
 
 using std::vector;
 using std::map;
+using std::swap;
+using std::iter_swap;
 
-namespace Algo
+namespace AlgoSort
 {
     template<typename T>
     void BubbleSort(vector<T>& SortVector)
@@ -23,7 +25,7 @@ namespace Algo
             {
                 if (SortVector[j - 1] > SortVector[j])
                 {
-                    std::swap(SortVector[j], SortVector[j - 1]);
+                    swap(SortVector[j], SortVector[j - 1]);
                 }
             }
         }
@@ -51,7 +53,7 @@ namespace Algo
             {
                 if (SortVector[j - 1] > SortVector[j])
                 {
-                    std::swap(SortVector[j], SortVector[j - 1]);
+                    swap(SortVector[j], SortVector[j - 1]);
                     bSwaped = true;
                 }
             }
@@ -145,10 +147,97 @@ namespace Algo
         for (const T& Element : InSortVector)
         {
             SortData& Data = CountMap[Element];
-            auto Index = OutSortVector.begin() + Data.StartingIndex;
-            OutSortVector.erase(OutSortVector.begin() + Data.StartingIndex);
-            OutSortVector.insert(OutSortVector.begin() + Data.StartingIndex, Element);
-            Data.StartingIndex += 1;
+            OutSortVector[Data.StartingIndex] = Element;
+            ++Data.StartingIndex;
+        }
+    }
+    
+    
+    template<typename Iter>
+    void QuickLomutoSort(Iter Begin, Iter End)
+    {        
+        auto IterI = Begin;
+        auto IterJ = Begin;
+        auto IterEnd = End - 1;
+        
+        std::iter_swap(Begin + rand() % (End - Begin), IterEnd);
+        
+        while (IterJ != End)
+        {
+            if (*IterJ < *IterEnd)
+            {
+                std::iter_swap(IterI, IterJ);
+                ++IterI;
+            }
+            ++IterJ;
+        }
+        std::iter_swap(IterI, IterEnd);
+
+        if ((IterI - Begin) > 1)
+        {            
+            QuickLomutoSort(Begin, IterI);
+        }
+        if ((End - IterI) > 1)
+        {            
+            QuickLomutoSort(IterI + 1, End);
+        }
+    }
+    
+    template<typename T>
+    void QuickLomutoSort(vector<T>& InSortVector)
+    {
+        if (InSortVector.size() > 1)
+        {
+            QuickLomutoSort(InSortVector.begin(), InSortVector.end());
+        }
+    }
+    
+    template<typename Iter>
+    void QuickHoareSort(Iter Begin, Iter End)
+    {        
+        auto IterI = Begin;
+        auto IterJ = End - 1;
+        auto IterBase = Begin + rand() % (End - Begin);
+
+        while (true)
+        {
+            while (*IterI < *IterBase)
+            {
+                ++IterI;
+            }
+            while (*IterJ > *IterBase)
+            {
+                --IterJ;
+            }
+
+            if (IterI >= IterJ)
+            {
+                break;
+            }
+
+            if (IterBase == IterI || IterBase == IterJ)
+            {
+                IterBase = IterBase == IterI ? IterJ : IterI;
+            }
+            std::iter_swap(IterI, IterJ);
+        }
+
+        if ((IterI - Begin) > 1)
+        {            
+            QuickHoareSort(Begin, IterI);
+        }
+        if ((End - IterI) > 1)
+        {            
+            QuickHoareSort(IterI + 1, End);
+        }
+    }
+    
+    template<typename T>
+    void QuickHoareSort(vector<T>& InSortVector)
+    {
+        if (InSortVector.size() > 1)
+        {
+            QuickHoareSort(InSortVector.begin(), InSortVector.end());
         }
     }
 }

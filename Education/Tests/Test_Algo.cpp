@@ -81,6 +81,7 @@ void Test_Algo::CountingSortTest()
         Vec.emplace_back();
     }
 
+    cout << "Full reverted vector" << endl;
     CountingTest(Vec);
     CountingStableTest(Vec);
     
@@ -96,6 +97,7 @@ void Test_Algo::CountingSortTest()
         }
     }
 
+    cout << "Full reverted vector %5" << endl;
     CountingTest(VecPairs);
     CountingStableTest(VecPairs);
     
@@ -106,11 +108,23 @@ void Test_Algo::CountingSortTest()
         VecRand.push_back(rand() % 100);
     }
 
+    cout << "Random elements %100" << endl;
     CountingTest(VecRand);
     CountingStableTest(VecRand);
 }
 
+void Test_Algo::QuickSortTest()
+{
+    vector<int> Vec;
 
+    for (int i = VectorSize; i != 0; i--)
+    {
+        Vec.push_back(i);
+    }
+    
+    QuickLomutoTest(Vec);
+    QuickHoareTest(Vec);
+}
 
 
 template<typename T>
@@ -120,7 +134,7 @@ void Test_Algo::BubbleTest(vector<T> InVector)
     
     StartTimer();
     
-    Algo::BubbleSort(InVector);
+    AlgoSort::BubbleSort(InVector);
 
     cout << "Elapsed bubble sort time: " << StopAndReturnElapsedTime() << endl;
 
@@ -135,7 +149,7 @@ void Test_Algo::BubbleAdaptiveTest(vector<T> InVector)
     
     StartTimer();
     
-    Algo::BubbleSortAdaptive(InVector);
+    AlgoSort::BubbleSortAdaptive(InVector);
 
     cout << "Elapsed adaptive bubble sort time: " << StopAndReturnElapsedTime() << endl;
 
@@ -150,7 +164,7 @@ void Test_Algo::InsertionTest(vector<T> InVector)
     
     StartTimer();
     
-    Algo::InsertionSort(InVector);
+    AlgoSort::InsertionSort(InVector);
 
     cout << "Elapsed insertion sort sort time: " << StopAndReturnElapsedTime() << endl;
 
@@ -166,7 +180,7 @@ void Test_Algo::CountingTest(vector<T> InVector)
     vector<T> SortedVector;
     StartTimer();
     
-    Algo::CountingSort(InVector, SortedVector);
+    AlgoSort::CountingSort(InVector, SortedVector);
 
     cout << "Elapsed counting sort sort time: " << StopAndReturnElapsedTime() << endl;
 
@@ -182,9 +196,39 @@ void Test_Algo::CountingStableTest(vector<T> InVector)
     vector<T> SortedVector;
     StartTimer();
     
-    Algo::CountingStableSort(InVector, SortedVector);
+    AlgoSort::CountingStableSort(InVector, SortedVector);
 
     cout << "Elapsed counting stable sort sort time: " << StopAndReturnElapsedTime() << endl;
 
     cout << "Vector was " << (IsVectorSorted(SortedVector) ? "" : "not ") << "sorted" << endl;
+}
+
+template <typename T>
+void Test_Algo::QuickLomutoTest(vector<T> InVector)
+{
+    cout << "Quick Lomuto sort test started!" << endl;
+    
+    vector<T> SortedVector;
+    StartTimer();
+    
+    AlgoSort::QuickLomutoSort(InVector);
+
+    cout << "Elapsed quick Lomuto sort sort time: " << StopAndReturnElapsedTime() << endl;
+
+    cout << "Vector was " << (IsVectorSorted(InVector) ? "" : "not ") << "sorted" << endl;    
+}
+
+template <typename T>
+void Test_Algo::QuickHoareTest(vector<T> InVector)
+{
+    cout << "Quick Hoare sort test started!" << endl;
+    
+    vector<T> SortedVector;
+    StartTimer();
+    
+    AlgoSort::QuickHoareSort(InVector);
+
+    cout << "Elapsed quick Hoare sort sort time: " << StopAndReturnElapsedTime() << endl;
+
+    cout << "Vector was " << (IsVectorSorted(InVector) ? "" : "not ") << "sorted" << endl;
 }
