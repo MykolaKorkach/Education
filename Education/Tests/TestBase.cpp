@@ -1,15 +1,77 @@
-#include "TestBase.h"
+﻿#include "TestBase.h"
 
-#include <chrono>
-
-void TestBase::StartTimer()
+void TestBase::AddOutput(const string& OutputStr)
 {
-    StartTime = std::chrono::steady_clock::now();
+    TestOutput.append(OutputStr + "\t");
 }
 
-double TestBase::StopAndReturnElapsedTime() const
-{
-    const auto EndTime = std::chrono::steady_clock::now();
-    const auto ElapsedTime = EndTime - StartTime;
-    return std::chrono::duration_cast<std::chrono::duration<double>>(ElapsedTime).count();
+void TestBase::PrintOutput()
+{    
+    cout << TestOutput << endl;
+    TestOutput.clear();
 }
+
+void TestBase::SetBeforeTestFunc(const function<void()>& BeforeFunc)
+{
+    Before = BeforeFunc;
+}
+
+void TestBase::SetAfterTestFunc(const function<void()>& AfterFunc)
+{
+    After = AfterFunc;
+}
+
+void TestBase::AddPerfTest(const string& SpecName, const function<void()>& InPerfFunc)
+{
+    TestSpec Spec(SpecName);
+    Spec.TestPerfFunc = InPerfFunc;    
+    TestSpecs.push_back(Spec);
+}
+
+void TestBase::AddPerfTestWithResult(const string& SpecName, const function<void()>& InPerfFunc, const function<void()>& InResultFunc)
+{
+    TestSpec Spec(SpecName);
+    Spec.TestPerfFunc = InPerfFunc;
+    Spec.TestResultFunc = InResultFunc;
+    TestSpecs.push_back(Spec);
+}
+
+
+bool TestBase::IsValid() const
+{
+    return !TestSpecs.empty() && !TestName.empty();
+}
+
+bool TestBase::CanRunTest() const
+{
+    return IsValid() && CurrentStage < MaxStage;
+}
+
+void TestBase::OnTestStart()
+{
+    cout << "Stage " << CurrentStage << " was started." << endl;
+}
+
+void TestBase::OnTestEnd()
+{
+    cout << "Stage " << CurrentStage << " was ended.\n" << endl;
+    CurrentStage++;
+}
+
+void TestBase::RunBefore() const
+{
+    if (Before != nullptr)
+    {
+        Before();
+    }
+}
+
+void TestBase::RunAfter() const
+{
+    if (After != nullptr)
+    {
+        After();
+    }
+}
+
+

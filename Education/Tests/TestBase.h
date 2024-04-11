@@ -1,55 +1,68 @@
-#pragma once
-
-#include <chrono>
+﻿#pragma once
+#include <functional>
 #include <iostream>
+#include <string>
 #include <vector>
 
 using std::vector;
+using std::string;
+using std::function;
 using std::cout;
 using std::endl;
 
-class TestBase
+struct TestSpec
 {
-    
-public:
-
-    void StartTimer();
-    double StopAndReturnElapsedTime() const;
-        
-    template<typename T>
-    void PrintVector(const vector<T>& InVector);
-        
-    template<typename T>
-    bool IsVectorSorted(const vector<T>& InVector);
-
-private:
-    
-    std::chrono::time_point<std::chrono::steady_clock> StartTime;
-};
- 
-
-template <typename T>
-void TestBase::PrintVector(const vector<T>& InVector)
-{
-    for (const T& i : InVector)
-    {        
-        cout << i << " "; 
-    }
-    cout << endl;
-}
-
-template <typename T>
-bool TestBase::IsVectorSorted(const vector<T>& InVector)
-{
-    bool bSorted = true;
-
-    for (size_t i = 1; i < InVector.size(); i++)
+    TestSpec() = delete;
+    TestSpec(const string& InSpecName)
     {
-        if (InVector[i - 1] > InVector[i])
-        {
-            bSorted = false;
-            break;
-        }
+        SpecName = InSpecName;
     }
-    return bSorted;
-}
+    
+    string SpecName;
+    function<void()> TestPerfFunc;
+    function<void()> TestResultFunc;
+};
+
+
+struct TestBase
+{
+    virtual void DefineTest() = 0;
+
+    bool IsValid() const;
+    string GetName() const { return TestName; }
+
+    virtual ~TestBase() = default;
+
+    virtual bool CanRunTest() const;
+    
+    virtual void OnTestStart();
+    virtual void OnTestEnd();
+    
+    void RunBefore() const;
+    void RunAfter() const;
+
+    const vector<TestSpec>& GetTestSpecs() const { return TestSpecs; }
+
+    void AddOutput(const string& OutputStr);
+    void PrintOutput();
+    
+protected:
+    
+    void SetBeforeTestFunc(const function<void()>& BeforeFunc);
+    void SetAfterTestFunc(const function<void()>& AfterFunc);
+    
+    void AddPerfTest(const string& SpecName, const function<void()>& InPerfFunc);
+    void AddPerfTestWithResult(const string& SpecName, const function<void()>& InPerfFunc, const function<void()>& InResultFunc);
+
+    int CurrentStage = 0;
+    int MaxStage = 1;
+    
+    string TestName;
+    string TestOutput;
+    
+private:    
+    
+    function<void()> Before;
+    function<void()> After;
+    vector<TestSpec> TestSpecs;
+};

@@ -89,7 +89,7 @@ namespace AlgoSort
 
     
     template<typename T>
-    void CountingSort(const vector<T>& InSortVector, vector<T>& OutSortVector)
+    void CountingSort(vector<T>& InSortVector)
     {
         if (InSortVector.empty())
         {
@@ -99,23 +99,25 @@ namespace AlgoSort
         map<T, int> CountMap;
         
         const size_t Size = InSortVector.size();
-        for (size_t i = 1; i < Size; i++)
+        for (size_t i = 0; i < Size; i++)
         {
             int& Count = CountMap[InSortVector[i]];
             ++Count;
         }
 
+        int Index = 0;
         for (auto& [Element, Count] : CountMap)
         {
             for (int i = 0; i < Count; i++)
             {
-                OutSortVector.push_back(Element);
+                InSortVector[Index] = Element;
+                Index++;
             }
         }
     }
     
     template<typename T>
-    void CountingStableSort(const vector<T>& InSortVector, vector<T>& OutSortVector)
+    void CountingStableSort(vector<T>& InSortVector)
     {
         struct SortData
         {
@@ -128,7 +130,7 @@ namespace AlgoSort
             return;
         }
 
-        OutSortVector.resize(InSortVector.size());
+        
         map<T, SortData> CountMap;
         
         const size_t Size = InSortVector.size();
@@ -144,10 +146,12 @@ namespace AlgoSort
             NextStartIndex += Data.Count;
         }
 
-        for (const T& Element : InSortVector)
+        vector<T> OldVector(InSortVector);
+        
+        for (const T& Element : OldVector)
         {
             SortData& Data = CountMap[Element];
-            OutSortVector[Data.StartingIndex] = Element;
+            InSortVector[Data.StartingIndex] = Element;
             ++Data.StartingIndex;
         }
     }
@@ -161,7 +165,7 @@ namespace AlgoSort
         auto IterEnd = End - 1;
         
         std::iter_swap(Begin + rand() % (End - Begin), IterEnd);
-        
+
         while (IterJ != End)
         {
             if (*IterJ < *IterEnd)
@@ -172,7 +176,7 @@ namespace AlgoSort
             ++IterJ;
         }
         std::iter_swap(IterI, IterEnd);
-
+        
         if ((IterI - Begin) > 1)
         {            
             QuickLomutoSort(Begin, IterI);
@@ -197,15 +201,15 @@ namespace AlgoSort
     {        
         auto IterI = Begin;
         auto IterJ = End - 1;
-        auto IterBase = Begin + rand() % (End - Begin);
+        auto Base = *(Begin + rand() % (End - Begin));
 
         while (true)
         {
-            while (*IterI < *IterBase)
+            while (*IterI < Base)
             {
                 ++IterI;
             }
-            while (*IterJ > *IterBase)
+            while (*IterJ > Base)
             {
                 --IterJ;
             }
@@ -214,12 +218,8 @@ namespace AlgoSort
             {
                 break;
             }
-
-            if (IterBase == IterI || IterBase == IterJ)
-            {
-                IterBase = IterBase == IterI ? IterJ : IterI;
-            }
-            std::iter_swap(IterI, IterJ);
+            
+            std::iter_swap(IterI++, IterJ--);
         }
 
         if ((IterI - Begin) > 1)
@@ -228,7 +228,7 @@ namespace AlgoSort
         }
         if ((End - IterI) > 1)
         {            
-            QuickHoareSort(IterI + 1, End);
+            QuickHoareSort(IterI, End);
         }
     }
     

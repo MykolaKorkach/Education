@@ -1,13 +1,27 @@
 
-#include "Tests/Test_Algo.h"
+#include "Tests/TestProcessorBase.h"
+
+struct A
+{
+    int i;
+    double d;
+};
+struct B
+{
+    double d;
+    int i;
+};
 
 int main()
 {
-    Test_Algo Test;
 
-    Test.BubbleSortTest();
-    Test.InsertionSortTest();
-    Test.CountingSortTest();
-    Test.QuickSortTest();
+    TestProcessorBase* Processor = TestProcessorBase::Get();
+
+    if (Processor != nullptr)
+    {
+        Processor->RunTests();
+    }
+    
+    return 0;
 }
 
