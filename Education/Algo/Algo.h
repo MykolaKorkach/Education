@@ -9,6 +9,7 @@ using std::map;
 using std::swap;
 using std::iter_swap;
 
+//TODO: Look for optimizations :)
 namespace AlgoSort
 {
     template<typename T>
