@@ -2,15 +2,15 @@
 
 #include "../Algo/Algo.h"
 
-static int VectorSize = 10;
+static int VectorSize = 1000;
 
-Test_Algo::Test_Algo()
+Test_SortAlgo::Test_SortAlgo()
 {
     TestName = "Algo test";
     MaxStage = 3;
 }
 
-void Test_Algo::DefineTest()
+void Test_SortAlgo::DefineTest()
 {
     SetBeforeTestFunc([this]()
     {
@@ -98,20 +98,28 @@ void Test_Algo::DefineTest()
     {
         AlgoSort::QuickHoareSort(VectorInt);
     });
+    
+    AddPerfTestWithResult("Merge sort", [this]()
+    {
+        AlgoSort::MergeSort(VectorStruct);
+    },[this]()
+    {
+        IsVectorSortStable(VectorStruct, InitialVectorStruct);
+    });
 
 
     SetAfterTestFunc([this]()
     {
         const bool bIntSorted = IsVectorSorted(VectorInt);
         const bool bStructSorted = IsVectorSorted(VectorStruct);
-        AddOutput("Vector was " + string(bIntSorted || bStructSorted ? "" : "not ") + "sorted");
+        AddOutput("Vector was " + string(bIntSorted || bStructSorted ? "" : "not ") + "sorted!");
         
         VectorInt.clear();
         VectorStruct.clear();
     });
 }
 
-bool Test_Algo::IsVectorSortStable(const vector<TestStruct>& InSortedVector, const vector<TestStruct>& InInitialVector)
+bool Test_SortAlgo::IsVectorSortStable(const vector<TestStruct>& InSortedVector, const vector<TestStruct>& InInitialVector)
 {
     struct CountStruct
     {

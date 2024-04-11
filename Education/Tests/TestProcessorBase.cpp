@@ -3,7 +3,7 @@
 #include <chrono>
 
 #include "TestBase.h"
-#include "Test_Algo.h"
+#include "Test_SortAlgo.h"
 
 TestProcessorBase* TestProcessorBase::TestProcessor = nullptr;
 
@@ -85,7 +85,7 @@ TestProcessorBase::~TestProcessorBase()
 
 TestProcessorBase::TestProcessorBase()
 {
-    Tests.push_back(new Test_Algo());
+    Tests.push_back(new Test_SortAlgo());
 
     for (TestBase* Test : Tests)
     {

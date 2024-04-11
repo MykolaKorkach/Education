@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <map>
 #include <vector>
 
@@ -238,6 +239,54 @@ namespace AlgoSort
         if (InSortVector.size() > 1)
         {
             QuickHoareSort(InSortVector.begin(), InSortVector.end());
+        }
+    }
+    
+    template<typename Iter>
+    void MergeSort(Iter Begin, Iter End)
+    {
+        const auto Diff = End - Begin;
+        if (Diff <= 1)
+        {
+            return;
+        }
+
+        auto IterMid = Begin + Diff / 2;
+
+        MergeSort(Begin, IterMid);
+        MergeSort(IterMid, End);
+        
+        while (true)
+        {
+            if (*Begin > *IterMid)
+            {
+                if (Diff == 2)
+                {
+                    std::iter_swap(Begin, IterMid);
+                }
+                else
+                {
+                    std::ranges::rotate(Begin, IterMid, IterMid + 1);
+                }
+                
+                if(++IterMid == End)
+                {
+                    return;
+                }
+            }
+            if(++Begin == IterMid)
+            {
+                return;
+            }
+        }
+    }
+    
+    template<typename T>
+    void MergeSort(vector<T>& InSortVector)
+    {
+        if (InSortVector.size() > 1)
+        {
+            MergeSort(InSortVector.begin(), InSortVector.end());
         }
     }
 }

@@ -30,12 +30,12 @@ struct TestStruct
     int Second;
 };
 
-class Test_Algo : public TestBase
+class Test_SortAlgo : public TestBase
 {
 public:
 
-    Test_Algo();
-    virtual ~Test_Algo() override = default;
+    Test_SortAlgo();
+    virtual ~Test_SortAlgo() override = default;
     
     void DefineTest() override;
     
@@ -56,7 +56,7 @@ private:
 
 
 template <typename T>
-void Test_Algo::PrintVector(const vector<T>& InVector)
+void Test_SortAlgo::PrintVector(const vector<T>& InVector)
 {
     for (const T& i : InVector)
     {        
@@ -66,7 +66,7 @@ void Test_Algo::PrintVector(const vector<T>& InVector)
 }
 
 template <typename T>
-bool Test_Algo::IsVectorSorted(const vector<T>& InVector)
+bool Test_SortAlgo::IsVectorSorted(const vector<T>& InVector)
 {
     bool bSorted = true;
 
