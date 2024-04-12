@@ -106,7 +106,11 @@ void Test_SortAlgo::DefineTest()
     {
         IsVectorSortStable(VectorStruct, InitialVectorStruct);
     });
-
+    
+    AddPerfTest("Heap sort", [this]()
+    {
+        AlgoSort::HeapSort(VectorInt);
+    });
 
     SetAfterTestFunc([this]()
     {

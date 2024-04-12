@@ -290,6 +290,96 @@ namespace AlgoSort
             MergeSort(InSortVector.begin(), InSortVector.end());
         }
     }
+    
+    
+    template<typename Iter>
+    void HeapSort(Iter Begin, Iter End)
+    {
+        auto Diff = End - Begin;
+        std::function<void(Iter)> Heapify;
+        
+        Heapify = [=](Iter IterBegin)
+        {
+            auto Largest = IterBegin;
+
+            auto Left = Begin + ((IterBegin - Begin) * 2) + 1;
+            auto Right = Begin + ((IterBegin - Begin) * 2) + 2;
+
+            if (Left < End && *Left > *Largest)
+            {
+                Largest = Left;
+            }
+            if (Right < End && *Right > *Largest)
+            {
+                Largest = Right;                
+            }
+
+            if (Largest != IterBegin)
+            {
+                Heapify(Largest);
+            }            
+        };
+
+        for (auto i = (End - Begin) - 1; Begin + i >= Begin; --i)
+        {
+            Heapify(Begin + i);
+        }
+
+        cout << endl;
+    }
+
+    template<typename T>
+    void Heapify(vector<T>& InSortVector, size_t IndexBegin, size_t VecSize)
+    {
+        size_t Smaller = IndexBegin;
+
+        size_t Left = IndexBegin * 2 + 1;
+        size_t Right = IndexBegin * 2 + 2;
+            
+        if (Left < VecSize && InSortVector[Left] < InSortVector[Smaller])
+        {
+            Smaller = Left;
+        }
+        if (Right < VecSize && InSortVector[Right] < InSortVector[Smaller])
+        {
+            Smaller = Right;                
+        }
+
+        if (Smaller != IndexBegin)
+        {
+            swap(InSortVector[IndexBegin], InSortVector[Smaller]);
+            Heapify(InSortVector, Smaller, VecSize);
+        }    
+    }
+
+    template<typename T>
+    void HeapSort(vector<T>& InSortVector)
+    {
+        if (InSortVector.empty())
+        {
+            return;
+        }
+
+        size_t VecSize = InSortVector.size();
+
+        for (int i = static_cast<int>(VecSize) / 2 + 1; i >= 0; --i)
+        {
+            Heapify(InSortVector, i, VecSize);
+        }
+
+        auto EndIter = InSortVector.end();
+        auto BeginIter = InSortVector.begin();
+        while (VecSize > 0)           
+        {
+            std::rotate(BeginIter, BeginIter + 1, EndIter);
+            for (int i = static_cast<int>(VecSize) / 2 + 1; i >= 0; --i)
+            {
+                Heapify(InSortVector, i, VecSize);
+            }
+            --VecSize;
+        }
+        std::rotate(BeginIter, BeginIter + 1, EndIter);
+    }
 }
 
 
