@@ -21,6 +21,13 @@ void TestBase::SetAfterTestFunc(const function<void()>& AfterFunc)
     After = AfterFunc;
 }
 
+void TestBase::AddTest(const string& SpecName, const function<void()>& InTestFunc)
+{
+    TestSpec Spec(SpecName);
+    Spec.TestFunc = InTestFunc;    
+    TestSpecs.push_back(Spec);
+}
+
 void TestBase::AddPerfTest(const string& SpecName, const function<void()>& InPerfFunc)
 {
     TestSpec Spec(SpecName);

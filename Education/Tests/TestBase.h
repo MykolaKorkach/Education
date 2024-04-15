@@ -19,6 +19,7 @@ struct TestSpec
     }
     
     string SpecName;
+    function<void()> TestFunc;
     function<void()> TestPerfFunc;
     function<void()> TestResultFunc;
 };
@@ -51,6 +52,7 @@ protected:
     void SetBeforeTestFunc(const function<void()>& BeforeFunc);
     void SetAfterTestFunc(const function<void()>& AfterFunc);
     
+    void AddTest(const string& SpecName, const function<void()>& InTestFunc);
     void AddPerfTest(const string& SpecName, const function<void()>& InPerfFunc);
     void AddPerfTestWithResult(const string& SpecName, const function<void()>& InPerfFunc, const function<void()>& InResultFunc);
 

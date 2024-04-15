@@ -1,6 +1,6 @@
 ﻿#include "Test_SortAlgo.h"
 
-#include "../Algo/Algo.h"
+#include "../Algo/AlgoSort.h"
 
 static int VectorSize = 1000;
 

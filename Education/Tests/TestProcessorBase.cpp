@@ -3,6 +3,7 @@
 #include <chrono>
 
 #include "TestBase.h"
+#include "Test_NumbersAlgo.h"
 #include "Test_SortAlgo.h"
 
 TestProcessorBase* TestProcessorBase::TestProcessor = nullptr;
@@ -35,9 +36,14 @@ void TestProcessorBase::RunTests()
         
             for (const TestSpec& Spec : Specs)
             {
-                Test->AddOutput(Spec.SpecName);
+                Test->AddOutput(Spec.SpecName + ":");
                 
                 Test->RunBefore();
+
+                if (Spec.TestFunc != nullptr)
+                {
+                    Spec.TestFunc();
+                }       
 
                 if (Spec.TestPerfFunc != nullptr)
                 {
@@ -86,6 +92,7 @@ TestProcessorBase::~TestProcessorBase()
 TestProcessorBase::TestProcessorBase()
 {
     Tests.push_back(new Test_SortAlgo());
+    Tests.push_back(new Test_NumbersAlgo());
 
     for (TestBase* Test : Tests)
     {
