@@ -129,7 +129,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Education.cpp" />
-    <ClCompile Include="Patterns\Factory.cpp" />
     <ClCompile Include="Tests\TestBase.cpp" />
     <ClCompile Include="Tests\TestProcessorBase.cpp" />
     <ClCompile Include="Tests\Test_NumbersAlgo.cpp" />
@@ -138,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="Algo\AlgoNumbers.h" />
     <ClInclude Include="Algo\AlgoSort.h" />
+    <ClInclude Include="Patterns\AbstractFactory.h" />
     <ClInclude Include="Patterns\Factory.h" />
     <ClInclude Include="Tests\TestBase.h" />
     <ClInclude Include="Tests\TestProcessorBase.h" />
