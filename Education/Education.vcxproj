@@ -131,16 +131,22 @@
     <ClCompile Include="Education.cpp" />
     <ClCompile Include="Tests\TestBase.cpp" />
     <ClCompile Include="Tests\TestProcessorBase.cpp" />
+    <ClCompile Include="Tests\Test_Graph.cpp" />
+    <ClCompile Include="Tests\Test_GraphAlgo.cpp" />
     <ClCompile Include="Tests\Test_NumbersAlgo.cpp" />
     <ClCompile Include="Tests\Test_SortAlgo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Algo\AlgoGraph.h" />
     <ClInclude Include="Algo\AlgoNumbers.h" />
     <ClInclude Include="Algo\AlgoSort.h" />
     <ClInclude Include="Patterns\AbstractFactory.h" />
     <ClInclude Include="Patterns\Factory.h" />
+    <ClInclude Include="Structures\Graph.h" />
     <ClInclude Include="Tests\TestBase.h" />
     <ClInclude Include="Tests\TestProcessorBase.h" />
+    <ClInclude Include="Tests\Test_Graph.h" />
+    <ClInclude Include="Tests\Test_GraphAlgo.h" />
     <ClInclude Include="Tests\Test_NumbersAlgo.h" />
     <ClInclude Include="Tests\Test_SortAlgo.h" />
   </ItemGroup>

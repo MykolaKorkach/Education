@@ -21,6 +21,14 @@ void TestBase::SetAfterTestFunc(const function<void()>& AfterFunc)
     After = AfterFunc;
 }
 
+void TestBase::AddTestSpec(TestSpec Spec)
+{
+    if (Spec.IsValid())
+    {
+        TestSpecs.push_back(Spec);
+    }
+}
+
 void TestBase::AddTest(const string& SpecName, const function<void()>& InTestFunc)
 {
     TestSpec Spec(SpecName);

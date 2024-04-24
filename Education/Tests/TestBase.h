@@ -17,9 +17,15 @@ struct TestSpec
     {
         SpecName = InSpecName;
     }
+
+    bool IsValid() const
+    {
+        return !SpecName.empty();
+    }
     
     string SpecName;
     function<void()> TestFunc;
+    function<void()> PreTestPerfFunc;
     function<void()> TestPerfFunc;
     function<void()> TestResultFunc;
 };
@@ -52,6 +58,8 @@ protected:
     void SetBeforeTestFunc(const function<void()>& BeforeFunc);
     void SetAfterTestFunc(const function<void()>& AfterFunc);
     
+    void AddTestSpec(TestSpec Spec);
+
     void AddTest(const string& SpecName, const function<void()>& InTestFunc);
     void AddPerfTest(const string& SpecName, const function<void()>& InPerfFunc);
     void AddPerfTestWithResult(const string& SpecName, const function<void()>& InPerfFunc, const function<void()>& InResultFunc);
